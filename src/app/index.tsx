@@ -1,98 +1,187 @@
-import * as Device from 'expo-device';
-import { Platform, StyleSheet } from 'react-native';
-import { SafeAreaView } from 'react-native-safe-area-context';
+import Ionicons from "@expo/vector-icons/Ionicons";
+import { Image } from "expo-image";
+import { router } from "expo-router";
+import {
+  StatusBar,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+} from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
 
-import { AnimatedIcon } from '@/components/animated-icon';
-import { HintRow } from '@/components/hint-row';
-import { ThemedText } from '@/components/themed-text';
-import { ThemedView } from '@/components/themed-view';
-import { WebBadge } from '@/components/web-badge';
-import { BottomTabInset, MaxContentWidth, Spacing } from '@/constants/theme';
-
-function getDevMenuHint() {
-  if (Platform.OS === 'web') {
-    return <ThemedText type="small">use browser devtools</ThemedText>;
-  }
-  if (Device.isDevice) {
-    return (
-      <ThemedText type="small">
-        shake device or press <ThemedText type="code">m</ThemedText> in terminal
-      </ThemedText>
-    );
-  }
-  const shortcut = Platform.OS === 'android' ? 'cmd+m (or ctrl+m)' : 'cmd+d';
+export default function WelcomeScreen() {
   return (
-    <ThemedText type="small">
-      press <ThemedText type="code">{shortcut}</ThemedText>
-    </ThemedText>
-  );
-}
+    <SafeAreaView style={styles.container} edges={["bottom"]}>
+      <StatusBar barStyle="light-content" />
 
-export default function HomeScreen() {
-  return (
-    <ThemedView style={styles.container}>
-      <SafeAreaView style={styles.safeArea}>
-        <ThemedView style={styles.heroSection}>
-          <AnimatedIcon />
-          <ThemedText type="title" style={styles.title}>
-            Welcome to&nbsp;Expo
-          </ThemedText>
-        </ThemedView>
+      <View style={styles.hero}>
+        <Image
+          source={require("../../assets/images/lisbon-hero.png")}
+          style={StyleSheet.absoluteFill}
+          contentFit="cover"
+          contentPosition="center"
+        />
 
-        <ThemedText type="code" style={styles.code}>
-          get started
-        </ThemedText>
+        <View style={styles.heroOverlay}>
+          <Text style={styles.logo}>together we go.</Text>
 
-        <ThemedView type="backgroundElement" style={styles.stepContainer}>
-          <HintRow
-            title="Try editing"
-            hint={<ThemedText type="code">src/app/index.tsx</ThemedText>}
-          />
-          <HintRow title="Dev tools" hint={getDevMenuHint()} />
-          <HintRow
-            title="Fresh start"
-            hint={<ThemedText type="code">npm run reset-project</ThemedText>}
-          />
-        </ThemedView>
+          <View style={styles.destination}>
+            <Ionicons name="location-outline" size={13} color="#FFFFFF" />
+            <Text style={styles.destinationText}>
+              Lisbon, Portugal
+            </Text>
+          </View>
+        </View>
+      </View>
 
-        {Platform.OS === 'web' && <WebBadge />}
-      </SafeAreaView>
-    </ThemedView>
+      {/* Main content */}
+      <View style={styles.content}>
+        <View>
+
+          <Text style={styles.heading}>
+            Great trips start{"\n"}with your people.
+          </Text>
+
+          <Text style={styles.description}>
+            One place for your plans, shared costs, and all the moments in
+            between.
+          </Text>
+        </View>
+
+        <View style={styles.actions}>
+          <TouchableOpacity
+            style={styles.primaryButton}
+            onPress={() => router.push("/signup" as any)}
+          >
+            <Ionicons name="arrow-forward" size={17} color="#fff" />
+            <Text style={styles.primaryButtonText}>Create an account</Text>
+          </TouchableOpacity>
+
+          <TouchableOpacity
+            style={styles.secondaryButton}
+            onPress={() => router.push("/login" as any)}
+          >
+            <Text style={styles.secondaryButtonText}>Sign in</Text>
+          </TouchableOpacity>
+
+          <TouchableOpacity style={styles.googleButton}>
+            <Text style={styles.googleButtonText}>Continue with Google</Text>
+          </TouchableOpacity>
+
+          <Text style={styles.legal}>
+            By continuing, you agree to our Terms & Privacy Policy.
+          </Text>
+        </View>
+      </View>
+    </SafeAreaView>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'center',
-    flexDirection: 'row',
+    backgroundColor: "#FFFFFF",
   },
-  safeArea: {
+  hero: {
+    height: "45%",
+    width: "100%",
+  },
+  heroOverlay: {
     flex: 1,
-    paddingHorizontal: Spacing.four,
-    alignItems: 'center',
-    gap: Spacing.three,
-    paddingBottom: BottomTabInset + Spacing.three,
-    maxWidth: MaxContentWidth,
+    justifyContent: "space-between",
+    paddingTop: 65,
+    paddingHorizontal: 24,
+    paddingBottom: 20,
+    backgroundColor: "rgba(0,0,0,0.12)",
   },
-  heroSection: {
-    alignItems: 'center',
-    justifyContent: 'center',
+  logo: {
+    color: "#FFFFFF",
+    fontSize: 23,
+    fontWeight: "800",
+    letterSpacing: -0.8,
+  },
+  destination: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 5,
+  },
+  destinationText: {
+    fontSize: 11,
+    color: "#FFFFFF",
+    fontWeight: "500",
+  },
+  content: {
     flex: 1,
-    paddingHorizontal: Spacing.four,
-    gap: Spacing.four,
+    paddingHorizontal: 25,
+    paddingTop: 34,
+    paddingBottom: 20,
+    justifyContent: "space-between",
   },
-  title: {
-    textAlign: 'center',
+  eyebrow: {
+    color: "#2563EB",
+    fontSize: 10,
+    fontWeight: "800",
+    letterSpacing: 1.2,
+    marginBottom: 12,
   },
-  code: {
-    textTransform: 'uppercase',
+  heading: {
+    color: "#14243A",
+    fontSize: 31,
+    fontWeight: "800",
+    lineHeight: 34,
+    letterSpacing: -1,
+    marginBottom: 12,
   },
-  stepContainer: {
-    gap: Spacing.three,
-    alignSelf: 'stretch',
-    paddingHorizontal: Spacing.three,
-    paddingVertical: Spacing.four,
-    borderRadius: Spacing.four,
+  description: {
+    color: "#778397",
+    fontSize: 13,
+    lineHeight: 19,
+    maxWidth: 310,
+  },
+  actions: {
+    gap: 10,
+  },
+  primaryButton: {
+    backgroundColor: "#2563EB",
+    height: 52,
+    borderRadius: 12,
+    justifyContent: "center",
+    alignItems: "center",
+    flexDirection: "row",
+    gap: 9,
+  },
+  primaryButtonText: {
+    color: "#FFFFFF",
+    fontSize: 14,
+    fontWeight: "700",
+  },
+  secondaryButton: {
+    height: 49,
+    borderRadius: 12,
+    borderWidth: 1,
+    borderColor: "#E5EAF1",
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  secondaryButtonText: {
+    color: "#14243A",
+    fontSize: 14,
+    fontWeight: "600",
+  },
+  googleButton: {
+    alignItems: "center",
+    paddingVertical: 12,
+  },
+  googleButtonText: {
+    color: "#8590A2",
+    fontSize: 12,
+    fontWeight: "500",
+  },
+  legal: {
+    textAlign: "center",
+    color: "#A3ACB9",
+    fontSize: 10,
+    marginTop: 2,
   },
 });
