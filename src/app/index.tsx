@@ -63,6 +63,13 @@ export default function WelcomeScreen() {
             variant="text"
             onPress={() => {}}
           />
+          {__DEV__ && (
+            <AppButton
+              title="Preview Dashboard"
+              variant="text"
+              onPress={() => router.push("/(tabs)/home")}
+            />
+          )}
 
           <Text style={styles.legal}>
             By continuing, you agree to our Terms & Privacy Policy.

@@ -3,7 +3,6 @@ import React, { useState } from "react";
 import {
   View,
   Text,
-  TextInput,
   StyleSheet,
   Alert,
   KeyboardAvoidingView,
@@ -12,14 +11,16 @@ import {
 } from "react-native";
 import { router } from "expo-router";
 import { SafeAreaView } from "react-native-safe-area-context";
+
 import AppButton from "@/components/AppButton";
+import AppInput from "@/components/AppInput";
+import theme from "@/constants/theme";
 
 export default function LoginScreen() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
   const handleSignIn = () => {
-    // Check if the email is empty
     if (email.trim() === "") {
       Alert.alert(
         "Missing Email",
@@ -28,7 +29,6 @@ export default function LoginScreen() {
       return;
     }
 
-    // Check if the email looks valid
     if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.trim())) {
       Alert.alert(
         "Invalid Email",
@@ -37,7 +37,6 @@ export default function LoginScreen() {
       return;
     }
 
-    // Check if the password is empty
     if (password.trim() === "") {
       Alert.alert(
         "Missing Password",
@@ -46,22 +45,23 @@ export default function LoginScreen() {
       return;
     }
 
-    // All validation checks passed
     Alert.alert(
-      "Success",
-      "Form is valid! Authentication comes next."
+      "Form Complete",
+      "Your information is valid! Authentication comes next."
     );
   };
 
   return (
     <SafeAreaView style={styles.container}>
       <KeyboardAvoidingView
-        style={{ flex: 1 }}
+        style={styles.keyboardView}
         behavior={Platform.OS === "ios" ? "padding" : undefined}
       >
         <ScrollView
           contentContainerStyle={styles.content}
           keyboardShouldPersistTaps="handled"
+          keyboardDismissMode="on-drag"
+          showsVerticalScrollIndicator={false}
         >
           <View>
             {/* App branding */}
@@ -80,14 +80,10 @@ export default function LoginScreen() {
 
             {/* Login form */}
             <View style={styles.form}>
-              <Text style={styles.label}>
-                Email address
-              </Text>
-
-              <TextInput
-                style={styles.input}
+              <AppInput
+                label="Email address"
+                icon="mail-outline"
                 placeholder="you@example.com"
-                placeholderTextColor="#A3ACB9"
                 keyboardType="email-address"
                 autoCapitalize="none"
                 autoComplete="email"
@@ -95,21 +91,16 @@ export default function LoginScreen() {
                 onChangeText={setEmail}
               />
 
-              <Text style={styles.label}>
-                Password
-              </Text>
-
-              <TextInput
-                style={styles.input}
+              <AppInput
+                label="Password"
+                icon="lock-closed-outline"
                 placeholder="Enter your password"
-                placeholderTextColor="#A3ACB9"
-                secureTextEntry
+                isPassword
                 autoComplete="current-password"
                 value={password}
                 onChangeText={setPassword}
               />
 
-              {/* Reusable button */}
               <View style={styles.buttonContainer}>
                 <AppButton
                   title="Sign In"
@@ -142,74 +133,60 @@ export default function LoginScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#FFFFFF",
+    backgroundColor: theme.colors.background,
+  },
+
+  keyboardView: {
+    flex: 1,
   },
 
   content: {
     flexGrow: 1,
-    paddingHorizontal: 25,
+    paddingHorizontal: theme.spacing.lg,
     paddingTop: 75,
-    paddingBottom: 30,
+    paddingBottom: theme.spacing.xl,
     justifyContent: "space-between",
   },
 
   brand: {
-    color: "#2563EB",
-    fontSize: 22,
-    fontWeight: "800",
+    color: theme.colors.primary,
+    fontSize: theme.typography.sizes.heading,
+    fontWeight: theme.typography.weights.extrabold,
     letterSpacing: -0.8,
-    marginBottom: 65,
+    marginBottom: theme.spacing.xxxl,
   },
 
   title: {
-    fontSize: 32,
-    fontWeight: "800",
-    color: "#14243A",
+    fontSize: theme.typography.sizes.title,
+    fontWeight: theme.typography.weights.extrabold,
+    color: theme.colors.text,
     letterSpacing: -1,
-    marginBottom: 10,
+    marginBottom: theme.spacing.sm,
   },
 
   subtitle: {
-    color: "#778397",
-    fontSize: 14,
+    color: theme.colors.textSecondary,
+    fontSize: theme.typography.sizes.body,
     lineHeight: 21,
-    marginBottom: 32,
+    marginBottom: theme.spacing.xl,
   },
 
   form: {
-    gap: 8,
-  },
-
-  label: {
-    fontSize: 13,
-    fontWeight: "600",
-    color: "#14243A",
-    marginTop: 12,
-  },
-
-  input: {
-    height: 52,
-    borderWidth: 1,
-    borderColor: "#E5EAF1",
-    backgroundColor: "#FFFFFF",
-    borderRadius: 12,
-    paddingHorizontal: 16,
-    fontSize: 15,
-    color: "#14243A",
+    gap: theme.spacing.sm,
   },
 
   buttonContainer: {
-    marginTop: 24,
+    marginTop: theme.spacing.lg,
   },
 
   footer: {
     alignItems: "center",
-    gap: 4,
-    paddingTop: 35,
+    gap: theme.spacing.xs,
+    paddingTop: theme.spacing.xl,
   },
 
   footerText: {
-    color: "#778397",
-    fontSize: 13,
+    color: theme.colors.textSecondary,
+    fontSize: theme.typography.sizes.body,
   },
 });

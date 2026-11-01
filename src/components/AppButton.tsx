@@ -9,6 +9,7 @@ import {
 } from "react-native";
 import * as Haptics from "expo-haptics";
 import Ionicons from "@expo/vector-icons/Ionicons";
+import theme from "@/constants/theme";
 
 type IconName = React.ComponentProps<typeof Ionicons>["name"];
 
@@ -33,12 +34,13 @@ export default function AppButton({
 }: AppButtonProps) {
   const isDisabled = disabled || loading;
 
+  // All text colors come from the theme
   const textColor =
     variant === "primary"
-      ? "#FFFFFF"
+      ? theme.colors.textOnPrimary
       : variant === "secondary"
-        ? "#14243A"
-        : "#2563EB";
+        ? theme.colors.text
+        : theme.colors.primary;
 
   const handlePressIn = () => {
     if (!isDisabled) {
@@ -54,7 +56,7 @@ export default function AppButton({
     return (
       <Ionicons
         name={icon}
-        size={18}
+        size={theme.typography.sizes.large}
         color={textColor}
       />
     );
@@ -108,23 +110,23 @@ const styles = StyleSheet.create({
   button: {
     height: 52,
     width: "100%",
-    borderRadius: 12,
+    borderRadius: theme.radius.lg,
     justifyContent: "center",
     alignItems: "center",
   },
 
   primary: {
-    backgroundColor: "#2563EB",
+    backgroundColor: theme.colors.primary,
   },
 
   secondary: {
-    backgroundColor: "#FFFFFF",
+    backgroundColor: theme.colors.surface,
     borderWidth: 1,
-    borderColor: "#E5EAF1",
+    borderColor: theme.colors.border,
   },
 
   textButton: {
-    backgroundColor: "transparent",
+    backgroundColor: theme.colors.transparent,
     borderWidth: 0,
   },
 
@@ -141,11 +143,11 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "center",
-    gap: 10,
+    gap: theme.spacing.sm,
   },
 
   buttonText: {
-    fontSize: 15,
-    fontWeight: "600",
+    fontSize: theme.typography.sizes.medium,
+    fontWeight: theme.typography.weights.semibold,
   },
 });
