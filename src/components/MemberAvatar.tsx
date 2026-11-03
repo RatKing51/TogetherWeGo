@@ -1,5 +1,5 @@
 
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import {
   View,
   Text,
@@ -10,7 +10,7 @@ import {
   ViewStyle,
 } from "react-native";
 
-import theme from "@/constants/theme";
+import { theme } from "@/constants/theme";
 
 type AvatarSize = "small" | "medium" | "large";
 type AvatarColor = "blue" | "pink" | "yellow" | "green";
@@ -32,10 +32,10 @@ const sizes = {
 
 // Background colors
 const avatarColors = {
-  blue: "#DBEAFE",
-  pink: "#FCE7F3",
-  yellow: "#FEF3C7",
-  green: "#DCFCE7",
+  blue: theme.colors.avatarBlue,
+  pink: theme.colors.avatarPink,
+  yellow: theme.colors.avatarYellow,
+  green: theme.colors.avatarGreen,
 };
 
 // Generate initials from a full name
@@ -60,15 +60,10 @@ export default function MemberAvatar({
   color = "blue",
   style,
 }: MemberAvatarProps) {
-  const [imageFailed, setImageFailed] = useState(false);
+  const [failedImage, setFailedImage] = useState<ImageSourcePropType | null>(null);
 
   const avatarSize = sizes[size];
   const initials = getInitials(name);
-
-  // Reset image errors when the picture changes
-  useEffect(() => {
-    setImageFailed(false);
-  }, [image]);
 
   return (
     <View
@@ -85,12 +80,12 @@ export default function MemberAvatar({
         style,
       ]}
     >
-      {image && !imageFailed ? (
+      {image && failedImage !== image ? (
         <Image
           source={image}
           resizeMode="cover"
           style={styles.image}
-          onError={() => setImageFailed(true)}
+          onError={() => setFailedImage(image)}
         />
       ) : (
         <Text

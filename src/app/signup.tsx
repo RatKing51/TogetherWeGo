@@ -15,7 +15,7 @@ import { SafeAreaView } from "react-native-safe-area-context";
 
 import AppButton from "@/components/AppButton";
 import AppInput from "@/components/AppInput";
-import theme from "@/constants/theme";
+import { theme } from "@/constants/theme";
 
 export default function SignUpScreen() {
   const [fullName, setFullName] = useState("");
@@ -71,10 +71,7 @@ export default function SignUpScreen() {
     // Form is valid
     Keyboard.dismiss();
 
-    Alert.alert(
-      "Form Complete",
-      "Your information is valid! Account creation will be connected next."
-    );
+    router.replace("/(tabs)/home");
   };
 
   return (
@@ -97,7 +94,7 @@ export default function SignUpScreen() {
 
             {/* Heading */}
             <Text style={styles.title}>
-              Let's Get Going.
+              Let&apos;s Get Going.
             </Text>
 
             <Text style={styles.subtitle}>

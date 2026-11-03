@@ -14,7 +14,7 @@ import { SafeAreaView } from "react-native-safe-area-context";
 
 import AppButton from "@/components/AppButton";
 import AppInput from "@/components/AppInput";
-import theme from "@/constants/theme";
+import { theme } from "@/constants/theme";
 
 export default function LoginScreen() {
   const [email, setEmail] = useState("");
@@ -45,10 +45,7 @@ export default function LoginScreen() {
       return;
     }
 
-    Alert.alert(
-      "Form Complete",
-      "Your information is valid! Authentication comes next."
-    );
+    router.replace("/(tabs)/home");
   };
 
   return (
@@ -115,7 +112,7 @@ export default function LoginScreen() {
           {/* Footer */}
           <View style={styles.footer}>
             <Text style={styles.footerText}>
-              Don't have an account?
+              Don&apos;t have an account?
             </Text>
 
             <AppButton

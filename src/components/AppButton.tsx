@@ -9,7 +9,7 @@ import {
 } from "react-native";
 import * as Haptics from "expo-haptics";
 import Ionicons from "@expo/vector-icons/Ionicons";
-import theme from "@/constants/theme";
+import { theme } from "@/constants/theme";
 
 type IconName = React.ComponentProps<typeof Ionicons>["name"];
 

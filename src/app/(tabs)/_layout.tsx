@@ -12,7 +12,7 @@ import {
 } from "react-native";
 
 import { useSafeAreaInsets } from "react-native-safe-area-context";
-import theme from "@/constants/theme";
+import { theme } from "@/constants/theme";
 
 export default function TabLayout() {
   const insets = useSafeAreaInsets();
@@ -177,6 +177,7 @@ export default function TabLayout() {
           ),
         }}
       />
+      <Tabs.Screen name="trip" options={{ href: null }} />
     </Tabs>
   );
 }

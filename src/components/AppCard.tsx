@@ -8,7 +8,7 @@ import {
   StyleProp,
 } from "react-native";
 import * as Haptics from "expo-haptics";
-import theme from "@/constants/theme";
+import { theme } from "@/constants/theme";
 
 type AppCardProps = {
   children: React.ReactNode;

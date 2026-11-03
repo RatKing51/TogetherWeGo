@@ -61,7 +61,7 @@ export default function WelcomeScreen() {
           <AppButton
             title="Continue with Google"
             variant="text"
-            onPress={() => {}}
+            onPress={() => router.replace("/(tabs)/home")}
           />
           {__DEV__ && (
             <AppButton
